@@ -4,13 +4,11 @@
     "author": "Ionic Framework",
     "homepage": "http://ionicframework.com/",
     "private": true,
-    "main": "index.js",
+
   
 
     "scripts": {
-         "start": "node index.html",
-         
- 
+
         "clean": "ionic-app-scripts clean",
         "build": "ionic-app-scripts build",
         "lint": "ionic-app-scripts lint",
