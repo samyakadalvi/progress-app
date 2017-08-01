@@ -1,7 +1,7 @@
 var cacheName = 'pwa-commits-v3';
 
 var filesToCache = [
-    './app/app.html'
+    'index.html'
 ];
 
 // Install Service Worker
