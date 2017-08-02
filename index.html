@@ -28,7 +28,7 @@
 
 <script>
   if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('firebase-messaging-sw.js.js')
+      navigator.serviceWorker.register('firebase-messaging-sw.js')
         .then(() => console.log('service worker installed!!'))
         .catch(err => console.error('Error', err));
     }
@@ -36,7 +36,17 @@
   </script>
   <!-- un-comment this code to enable service worker-->
   <script>
-    
+      var config = {
+    apiKey: "AIzaSyBrRP-QrV_W0kjbxSbYztxC57eInU5ihDM",
+    authDomain: "progressapp-af2b8.firebaseapp.com",
+    databaseURL: "https://progressapp-af2b8.firebaseio.com",
+    projectId: "progressapp-af2b8",
+    storageBucket: "progressapp-af2b8.appspot.com",
+    messagingSenderId: "329708754726"
+  };
+  firebase.initializeApp(config);
+
+
 </script>
 
   <link href="build/main.css" rel="stylesheet">
@@ -57,16 +67,6 @@
   <!-- The main bundle js is generated during the build process -->
   <script src="build/main.js"></script>
 <script>
-  var config = {
-    apiKey: "AIzaSyBrRP-QrV_W0kjbxSbYztxC57eInU5ihDM",
-    authDomain: "progressapp-af2b8.firebaseapp.com",
-    databaseURL: "https://progressapp-af2b8.firebaseio.com",
-    projectId: "progressapp-af2b8",
-    storageBucket: "progressapp-af2b8.appspot.com",
-    messagingSenderId: "329708754726"
-  };
-  firebase.initializeApp(config);
-
 
 
 const messaging = firebase.messaging();
