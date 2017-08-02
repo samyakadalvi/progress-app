@@ -145,14 +145,7 @@ function showToken(currentToken) {
   function setTokenSentToServer(sent) {
     window.localStorage.setItem('sentToServer', sent ? 1 : 0);
   }
-  function showHideDiv(divId, show) {
-    const div = document.querySelector('#' + divId);
-    if (show) {
-      div.style = "display: visible";
-    } else {
-      div.style = "display: none";
-    }
-  }
+  
   function requestPermission() {
     console.log('Requesting permission...');
     // [START request_permission]
@@ -214,13 +207,13 @@ function showToken(currentToken) {
     }
   }
   function updateUIForPushEnabled(currentToken) {
-    showHideDiv(tokenDivId, true);
-    showHideDiv(permissionDivId, false);
+    //showHideDiv(tokenDivId, true);
+    //showHideDiv(permissionDivId, false);
     showToken(currentToken);
   }
   function updateUIForPushPermissionRequired() {
-    showHideDiv(tokenDivId, false);
-    showHideDiv(permissionDivId, true);
+    //showHideDiv(tokenDivId, false);
+    //showHideDiv(permissionDivId, true);
   }
 </script>
 </body>
