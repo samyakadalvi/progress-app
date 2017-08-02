@@ -119,10 +119,10 @@ messaging.getToken()
 });
 messaging.onMessage(function(payload) {
   console.log("Message received. ", payload);
-  const notificationTitle = 'Background Message Title';
+  const notificationTitle = payload.notification.title;
   const notificationOptions = {
-    body: 'Background Message body.',
-    icon: '/firebase-logo.png'
+    body: payload.notification.body,
+    icon: payload.notification.icon
   };
   new Notification (notificationTitle,notificationOptions)
         //notificationOptions.icon, notificationTitle, notificationOptions.body);
