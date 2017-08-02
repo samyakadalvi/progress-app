@@ -119,6 +119,13 @@ messaging.getToken()
 });
 messaging.onMessage(function(payload) {
   console.log("Message received. ", payload);
+  const notificationTitle = 'Background Message Title';
+  const notificationOptions = {
+    body: 'Background Message body.',
+    icon: '/firebase-logo.png'
+  };
+  window.webkitNotifications.createNotification(
+        notificationOptions.icon, notificationTitle, notificationOptions.body);
   // ...
 });
 
