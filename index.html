@@ -124,7 +124,9 @@ messaging.onMessage(function(payload) {
     body: payload.notification.body,
     icon: payload.notification.icon
   };
-  new Notification (notificationTitle,notificationOptions)
+  return self.registration.showNotification(notificationTitle,
+      notificationOptions);
+  //new Notification (notificationTitle,notificationOptions)
         //notificationOptions.icon, notificationTitle, notificationOptions.body);
   // ...
 });
