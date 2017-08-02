@@ -124,7 +124,7 @@ messaging.onMessage(function(payload) {
     body: 'Background Message body.',
     icon: '/firebase-logo.png'
   };
-  window.webkitNotifications.createNotification(
+  window.Notification.createNotification(
         notificationOptions.icon, notificationTitle, notificationOptions.body);
   // ...
 });
