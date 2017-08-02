@@ -24,11 +24,6 @@
 
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
 <script>
-  var path = require('path');
-var express = require('express');
-var app = express();
-var firebase = require('firebase');
-var request = require('request');
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyBrRP-QrV_W0kjbxSbYztxC57eInU5ihDM",
@@ -40,42 +35,6 @@ var request = require('request');
     serviceAccount: 'ProgressApp-f4e58f5d2ffd'
   };
   firebase.initializeApp(config);
-
-  app.use(express.static(path.join(__dirname, 'public'), {index: false}))
-app.get('/sender', function(req, res){
-  var allToken = firebase.database().ref('/token');
-  Promise.all([allToken.once('value')]).then(function(resp) {
-    var allToken = resp[0].val();
-    tokenRep = '';
-    Object.keys(allToken).forEach(function(uid) {
-      var token = allToken[uid];
-      request({
-        url: 'https://android.googleapis.com/gcm/send',
-        method: 'POST',
-        headers: {
-          'Content-Type' :' application/json',
-          'Authorization': 'key=AIzaSyDV-KhCa9dM-bSg_r23GUwpRJqBw6qrJIc', // Server key available in the parameters of the Firebase project
-        },
-        body: JSON.stringify(
-          {
-            "registration_ids" : [token.subscriptionId]
-          }
-        )
-      }, function(error, response, body) {
-      });
-    });
-  }).catch(function(error) {
-    console.log('Failed to start weekly top posts emailer:', error);
-  });
-  res.send('ok');
-});
-
-app.use('/', function (req, res) {
-  res.sendFile(__dirname + '/public/home.html');
-});
-app.listen(8080, function () {
-  console.log('Example app listening on port 8080!');
-});
 </script>
 <script>
   const messaging = firebase.messaging();
