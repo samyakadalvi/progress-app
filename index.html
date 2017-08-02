@@ -28,7 +28,7 @@
 
 <script>
   if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('firebase-messaging-sw.js')
+      navigator.serviceWorker.register('firebase-messaging-sw.js.js')
         .then(() => console.log('service worker installed!!'))
         .catch(err => console.error('Error', err));
     }
@@ -36,16 +36,7 @@
   </script>
   <!-- un-comment this code to enable service worker-->
   <script>
-    var config = {
-    apiKey: "AIzaSyBrRP-QrV_W0kjbxSbYztxC57eInU5ihDM",
-    authDomain: "progressapp-af2b8.firebaseapp.com",
-    databaseURL: "https://progressapp-af2b8.firebaseio.com",
-    projectId: "progressapp-af2b8",
-    storageBucket: "progressapp-af2b8.appspot.com",
-    messagingSenderId: "329708754726"
-  };
-  firebase.initializeApp(config);
-
+    
 </script>
 
   <link href="build/main.css" rel="stylesheet">
@@ -66,76 +57,70 @@
   <!-- The main bundle js is generated during the build process -->
   <script src="build/main.js"></script>
 <script>
-  
+  var config = {
+    apiKey: "AIzaSyBrRP-QrV_W0kjbxSbYztxC57eInU5ihDM",
+    authDomain: "progressapp-af2b8.firebaseapp.com",
+    databaseURL: "https://progressapp-af2b8.firebaseio.com",
+    projectId: "progressapp-af2b8",
+    storageBucket: "progressapp-af2b8.appspot.com",
+    messagingSenderId: "329708754726"
+  };
+  firebase.initializeApp(config);
+
 
 
 const messaging = firebase.messaging();
-  // [END get_messaging_object]
-  // IDs of divs that display Instance ID token UI or request permission UI.
-  const tokenDivId = 'token_div';
-  const permissionDivId = 'permission_div';
-  // [START refresh_token]
-  // Callback fired if Instance ID token is updated.
+messaging.requestPermission()
+.then(function() {
+  console.log('Notification permission granted.');
+  // TODO(developer): Retrieve an Instance ID token for use with FCM.
+  // ...
+})
+.catch(function(err) {
+  console.log('Unable to get permission to notify.', err);
+});
+messaging.getToken()
+  .then(function(currentToken) {
+    console.log(currentToken);
+    if (currentToken) {
+      sendTokenToServer(currentToken);
+      updateUIForPushEnabled(currentToken);
+    } else {
+      // Show permission request.
+      console.log('No Instance ID token available. Request permission to generate one.');
+      // Show permission UI.
+      updateUIForPushPermissionRequired();
+      setTokenSentToServer(false);
+    }
+  })
+  .catch(function(err) {
+    console.log('An error occurred while retrieving token. ', err);
+    showToken('Error retrieving Instance ID token. ', err);
+    setTokenSentToServer(false);
+  });
+
   messaging.onTokenRefresh(function() {
-    messaging.getToken()
-    .then(function(refreshedToken) {
-      console.log('Token refreshed.');
-      // Indicate that the new Instance ID token has not yet been sent to the
-      // app server.
-      setTokenSentToServer(false);
-      // Send Instance ID token to app server.
-      sendTokenToServer(refreshedToken);
-      // [START_EXCLUDE]
-      // Display new Instance ID token and clear UI of all previous messages.
-      resetUI();
-      // [END_EXCLUDE]
-    })
-    .catch(function(err) {
-      console.log('Unable to retrieve refreshed token ', err);
-      showToken('Unable to retrieve refreshed token ', err);
-    });
+  messaging.getToken()
+  .then(function(refreshedToken) {
+    console.log('Token refreshed.');
+    // Indicate that the new Instance ID token has not yet been sent to the
+    // app server.
+    setTokenSentToServer(false);
+    // Send Instance ID token to app server.
+    sendTokenToServer(refreshedToken);
+    // ...
+  })
+  .catch(function(err) {
+    console.log('Unable to retrieve refreshed token ', err);
+    showToken('Unable to retrieve refreshed token ', err);
   });
-  // [END refresh_token]
-  // [START receive_message]
-  // Handle incoming messages. Called when:
-  // - a message is received while the app has focus
-  // - the user clicks on an app notification created by a sevice worker
-  //   `messaging.setBackgroundMessageHandler` handler.
-  messaging.onMessage(function(payload) {
-    console.log("Message received. ", payload);
-    // [START_EXCLUDE]
-    // Update the UI to include the received message.
-    appendMessage(payload);
-    // [END_EXCLUDE]
-  });
-  // [END receive_message]
-  function resetUI() {
-    clearMessages();
-    showToken('loading...');
-    // [START get_token]
-    // Get Instance ID token. Initially this makes a network call, once retrieved
-    // subsequent calls to getToken will return from cache.
-    messaging.getToken()
-    .then(function(currentToken) {
-      if (currentToken) {
-        sendTokenToServer(currentToken);
-        updateUIForPushEnabled(currentToken);
-      } else {
-        // Show permission request.
-        console.log('No Instance ID token available. Request permission to generate one.');
-        // Show permission UI.
-        updateUIForPushPermissionRequired();
-        setTokenSentToServer(false);
-      }
-    })
-    .catch(function(err) {
-      console.log('An error occurred while retrieving token. ', err);
-      showToken('Error retrieving Instance ID token. ', err);
-      setTokenSentToServer(false);
-    });
-  }
-  // [END get_token]
-  function showToken(currentToken) {
+});
+messaging.onMessage(function(payload) {
+  console.log("Message received. ", payload);
+  // ...
+});
+
+function showToken(currentToken) {
     // Show token in console and UI.
     var tokenElement = document.querySelector('#token');
     tokenElement.textContent = currentToken;
@@ -177,7 +162,7 @@ const messaging = firebase.messaging();
       // [START_EXCLUDE]
       // In many cases once an app has been granted notification permission, it
       // should update its UI reflecting this.
-      resetUI();
+      //resetUI();
       // [END_EXCLUDE]
     })
     .catch(function(err) {
@@ -196,7 +181,7 @@ const messaging = firebase.messaging();
         setTokenSentToServer(false);
         // [START_EXCLUDE]
         // Once token is deleted update UI.
-        resetUI();
+        //resetUI();
         // [END_EXCLUDE]
       })
       .catch(function(err) {
@@ -236,7 +221,6 @@ const messaging = firebase.messaging();
     showHideDiv(tokenDivId, false);
     showHideDiv(permissionDivId, true);
   }
-  
 </script>
 </body>
 </html>
