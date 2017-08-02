@@ -33,6 +33,30 @@
         .catch(err => console.error('Error', err));
     }
   // Initialize Firebase
+  </script>
+  <!-- un-comment this code to enable service worker-->
+  <script>
+    
+</script>
+
+  <link href="build/main.css" rel="stylesheet">
+
+</head>
+<body>
+
+  <!-- Ionic's root component and where the app will load -->
+  <ion-app></ion-app>
+
+  <!-- The polyfills js is generated during the build process -->
+  <script src="build/polyfills.js"></script>
+
+  <!-- The vendor js is generated during the build process
+       It contains all of the dependencies in node_modules -->
+  <script src="build/vendor.js"></script>
+
+  <!-- The main bundle js is generated during the build process -->
+  <script src="build/main.js"></script>
+<script>
   var config = {
     apiKey: "AIzaSyBrRP-QrV_W0kjbxSbYztxC57eInU5ihDM",
     authDomain: "progressapp-af2b8.firebaseapp.com",
@@ -95,28 +119,5 @@ messaging.onMessage(function(payload) {
   // ...
 });
 </script>
-  <!-- un-comment this code to enable service worker-->
-  <script>
-    
-</script>
-
-  <link href="build/main.css" rel="stylesheet">
-
-</head>
-<body>
-
-  <!-- Ionic's root component and where the app will load -->
-  <ion-app></ion-app>
-
-  <!-- The polyfills js is generated during the build process -->
-  <script src="build/polyfills.js"></script>
-
-  <!-- The vendor js is generated during the build process
-       It contains all of the dependencies in node_modules -->
-  <script src="build/vendor.js"></script>
-
-  <!-- The main bundle js is generated during the build process -->
-  <script src="build/main.js"></script>
-
 </body>
 </html>
