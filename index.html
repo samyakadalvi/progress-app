@@ -27,6 +27,11 @@
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-messaging.js"></script>
 
 <script>
+  if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('service worker installed!!'))
+        .catch(err => console.error('Error', err));
+    }
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyBrRP-QrV_W0kjbxSbYztxC57eInU5ihDM",
@@ -92,11 +97,7 @@ messaging.onMessage(function(payload) {
 </script>
   <!-- un-comment this code to enable service worker-->
   <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('service worker installed!!'))
-        .catch(err => console.error('Error', err));
-    }
+    
 </script>
 
   <link href="build/main.css" rel="stylesheet">
